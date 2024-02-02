@@ -1,20 +1,29 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { Button } from "@/shadcn-components/ui/button"
-import { jwtDecode } from 'jwt-decode';
-import ImageSlider from '../ImageSlider/ImageSlider';
+import ImageSlider from '../Slider/ImageSlider';
 import { Col, Container, Row } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import Logo from '../../assets/ImageSlider/vibex.png'
-
+import auth_API from "../../apis/auth/auth_API"
+import { useAuth } from '@/contexts/authContext/AuthContext';
 
 
 
 function Auth() {
+  const { isLoggedIn,login } = useAuth();
+  const navigate=useNavigate();
+  useEffect(()=>{
+    if(isLoggedIn)
+    {
+        navigate("/dashboard");
+    }
+},[isLoggedIn])
   const leftColStyle = {padding: 0,margin: 0,border: 'none',};
-  const onLoginSuccess = (credentialResponse) => {
-    const decoded = jwtDecode(credentialResponse?.credential);
-    console.log(decoded);
+  const onLoginSuccess = async (credentialResponse) => {
+    const token=await auth_API(credentialResponse.credential);
+    if(token){login(token)};
   }
   return (
     <>

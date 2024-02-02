@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 import Cookies from "js-cookie";
-
-import getUser_API from "../../apis/generals/getUser_API";
 import { useAuth } from "../../contexts/authContext/AuthContext";
+import getUser_API from "../../apis/generals/getUser_API"
 
-export function StudentProtectedRoute({ elementBody: Component }) {
+
+export function GeneralProtectedRoute({ elementBody: Component }) {
   const [userDetails, setUserDetails] = useState(null);
   const { isLoggedIn } = useAuth();
 
@@ -26,10 +26,10 @@ export function StudentProtectedRoute({ elementBody: Component }) {
   if (!userDetails && isLoggedIn) {
     return <div>Loading.....</div>;
   }
-
+  const validUserTypes = ["student", "admin", "visitor", "alumni"];
   return (
     <>
-      {isLoggedIn && userDetails.usertype === "student" ? (
+      {isLoggedIn &&validUserTypes.includes(userDetails.usertype) ? (
         Component
       ) : (
         <Navigate to="/" replace/>
@@ -38,4 +38,4 @@ export function StudentProtectedRoute({ elementBody: Component }) {
   );
 }
 
-export default StudentProtectedRoute;
+export default GeneralProtectedRoute;
