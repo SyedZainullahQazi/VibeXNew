@@ -9,10 +9,12 @@ import {
 import Cookies from 'js-cookie';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useAuth } from '@/contexts/authContext/AuthContext';
+import Catalogue from '@/pages/generals/Catalogue';
 
-
-function LeftSideBar() {
+function LeftSideBar(props) {
+  const [catalogueState,setCatalogueState]=useState(false);
   const [userData, setUserData] = useState(null);
+
   const {logout} = useAuth();
 
   useEffect(() => {
@@ -27,6 +29,13 @@ function LeftSideBar() {
     }
     fetchData();
   }, []);
+
+  const showCataloguePage=()=>{
+    console.log("This Function  In LeftSideBar IS Called");
+    props.CatalogueHandler(true);
+    console.log("This Function  In LeftSideBar IS Called");
+    setCatalogueState(!catalogueState);
+  }
 
   return (
     <div className="lg:flex flex-col items-center sticky top-0 w-24 h-screen bg-slate-200 hidden">
@@ -59,10 +68,8 @@ function LeftSideBar() {
         </NavLink>
       </div>
       <div>
-        <NavLink to="/team">
-          <MdAddToPhotos className="text-3xl text-black mt-4" />
-        </NavLink>
-      </div>
+          <Catalogue/>
+      </div>  
       <div>
         <NavLink to="/team">
           <MdNotifications className="text-4xl text-black mt-4" />

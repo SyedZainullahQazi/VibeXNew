@@ -9,6 +9,7 @@ import Logo from '../../assets/ImageSlider/vibex.png';
 import getUser_API from '@/apis/generals/getUser_API';
 import Cookies from 'js-cookie';
 import { useAuth } from '@/contexts/authContext/AuthContext';
+import Catalogue from '@/pages/generals/Catalogue';
 
 function Bottombar() {
     const [userData, setUserData] = useState(null);
@@ -57,9 +58,7 @@ function Bottombar() {
         </NavLink>
       </div>
       <div>
-        <NavLink to="/team">
-          <MdAddToPhotos className="text-3xl md:text-4xl text-black mt-3" />
-        </NavLink>
+        <Catalogue/>
       </div>
       <div>
         <NavLink to="/team">
@@ -71,7 +70,7 @@ function Bottombar() {
         <NavLink to="/team">
         <LazyLoadImage  
           src={userData?.profilepicture}
-          className={`h-8 md:h-9 rounded-full mt-3`}
+          className={`h-8 md:h-10 rounded-full mt-2.5`}
         />
         </NavLink>
       </div>
