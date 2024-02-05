@@ -8,6 +8,22 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/shadcn-components/ui/dialog"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/shadcn-components/ui/select"
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormDescription,
+    FormMessage,
+} from '@/shadcn-components/ui/form';
 import { Input } from "@/shadcn-components/ui/input"
 import { Label } from "@/shadcn-components/ui/label"
 import { Button } from '@/shadcn-components/ui/button'
@@ -24,12 +40,27 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/shadcn-components/ui/carousel"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import addCatalogue_API from '@/apis/catalogue/addCatalogue_API';
+import Cookies from 'js-cookie';
+import base64Converter from '@/lib/base64Converter/base64Converter';
+
+
 
 export function Catalogue() {
+    const [writePostWarning, setWritePostWarning] = useState(false);
     const [phase, setPhase] = useState(true);
     const [api, setApi] = useState(null);
     const [lastIndex, setLastIndex] = useState(0);
     const [selectedImages, setSelectedImages] = useState([]);
+    const formSchema = z.object({
+        description: z.string().min(30, "Atleast 30 Chars").max(150, 'At Most 150 Chars.'),
+        space: z.string().refine(value => ['alumini', 'student', 'event', 'lost and found'].includes(value), {
+            message: 'Select Space.',
+        }),
+    });
     const phaseHandler = (state) => {
         setPhase(state);
     }
@@ -62,10 +93,35 @@ export function Catalogue() {
         setSelectedImages(updatedImages);
     };
     const handleWritePost = () => {
+        if (selectedImages.length === 0) {
+            setWritePostWarning(true);
+            return
+        }
         setPhase(false);
+        setWritePostWarning(false);
     }
     const handleBackToUpload = () => {
         setPhase(true);
+    };
+
+    const form = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            description: '',
+            space: '',
+        },
+    });
+
+    const onSubmit = async (data) => {
+        const base64Images = await Promise.all(selectedImages.map(file => base64Converter(file)));
+        const catalogue={
+            description:data.description,
+            space:data.space,
+            images:base64Images
+        }
+        await addCatalogue_API(Cookies.get("jwtToken"), catalogue);
+        console.log(selectedImages);
+        console.log(data);
     };
 
     return (
@@ -74,7 +130,8 @@ export function Catalogue() {
                 <a><MdAddToPhotos className="text-3xl md:text-4xl text-black mt-3 md:mt-4" /></a>
             </DialogTrigger>
             {phase ?
-                <DialogContent className="max-w-[300px] sm:max-w-[425px] md:max-w-[500px] lg:max-w-[600px] h-[450px] md:h-[520px] lg:h-[540px]
+                // Here we have the First Part Of Catalogue
+                <DialogContent className="max-w-[300px] sm:max-w-[425px] md:max-w-[500px] lg:max-w-[600px] h-[450px] md:h-[520px] lg:h-[540px] overflow-y-auto  
                 	">
                     <DialogHeader>
 
@@ -85,9 +142,10 @@ export function Catalogue() {
                     </DialogHeader>
                     <div className="flex flex-col justify-center">
                         <div className="flex flex-col items-center ">
-                            <Label htmlFor="name" className="mb-2 md:text-base">
+                            <Label htmlFor="name" className="md:text-base">
                                 Upload Your Memories
                             </Label>
+                            {writePostWarning ? <p className="text-sm text-red-500">Upload Atleast One Picture</p> : <br />}
                             <Input
                                 id="picture"
                                 type="file"
@@ -147,31 +205,35 @@ export function Catalogue() {
 
                         {/* Carosel */}
                     </div>
+
                     <div className="flex flex-row justify-center">
                         <DialogFooter >
                             <Button type="submit" className="bg-zinc-950 text-white " onClick={handleWritePost}>
                                 <GoPencil className=" mr-2 mt-1 text-sm" />Write Post</Button>
+
                         </DialogFooter>
                     </div>
 
                 </DialogContent>
+                //here begins the second part of the catalogue
                 :
-                <DialogContent className="max-w-[300px] sm:max-w-[425px] md:max-w-[500px] lg:max-w-[600px] h-[450px] md:h-[520px] lg:h-[540px]">
+                // The Second Catalogue Part Begins below
+                <DialogContent className="flex flex-col items-center max-w-[300px] sm:max-w-[425px] md:max-w-[500px] lg:max-w-[600px] h-[550px] md:h-[520px] lg:h-[540px]">
                     <DialogHeader>
-                        <div><BiArrowBack className="cursor-pointer" onClick={handleBackToUpload} /></div>
-                        <DialogTitle>Dialog Title</DialogTitle>
+                        <div style={{ position: 'fixed', top: '0', left: '0', padding: '10px' }}>
+                            <BiArrowBack className="cursor-pointer mt-2" onClick={handleBackToUpload} />
+                        </div>
+                        <DialogTitle>Almost There....</DialogTitle>
                         <DialogDescription>
-                            Dialog description goes here.
+                            Select Cover,Description and Category
                         </DialogDescription>
                     </DialogHeader>
-
-                    {/* Dialog content goes here */}
                     <div className="flex flex-col items-center justify-around">
                         <Carousel
                             opts={{
                                 align: "start",
                             }}
-                            className="w-full max-w-sm"
+                            className="w-40 md:w-3/6 md:ml-30"
                         >
                             <CarouselContent>
                                 {selectedImages && selectedImages.length !== 0 ?
@@ -191,7 +253,9 @@ export function Catalogue() {
                                         </CarouselItem>
                                     ))
 
-                                    : Array.from({ length: 5 }).map((_, index) => (
+                                    :
+                                    // If there we're no images.
+                                    Array.from({ length: 5 }).map((_, index) => (
                                         <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                                             <div className="p-1">
                                                 <Card>
@@ -206,63 +270,67 @@ export function Catalogue() {
                             <CarouselPrevious />
                             <CarouselNext />
                         </Carousel>
-                        <div>
-                            <Form {...form}>
-                                <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-                                    {/* Input Field */}
+                        <div className="flex flex-col items-center justify-between">
+                            <Form {...form} >
+                                <form onSubmit={form.handleSubmit(onSubmit)} className="w-60 ">
+                                    {/* Description Input Field */}
                                     <FormField
                                         control={form.control}
-                                        name="email"
+                                        name="description"
                                         render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Email</FormLabel>
-                                                <Input {...field} placeholder="Enter your email" />
-                                                <FormDescription>
-                                                    You can manage email addresses in your{' '}
-                                                    <a href="/examples/forms">email settings</a>.
-                                                </FormDescription>
-                                                <FormMessage />
+                                            <FormItem >
+                                                <FormLabel>Description</FormLabel>
+                                                <Input {...field} placeholder="Enter your description" />
+                                                {form.formState.errors.description ? (
+                                                    <FormMessage />
+                                                ) : (
+                                                    <div className="text-sm">Describe Your Experience</div>
+                                                )}
                                             </FormItem>
                                         )}
                                     />
 
-                                    {/* Select Field */}
+                                    {/* Space Select Field */}
                                     <FormField
                                         control={form.control}
-                                        name="fruit"
+                                        name="space"
                                         render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Fruit</FormLabel>
+                                            <FormItem >
+                                                <FormLabel>Space</FormLabel>
                                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                     <FormControl>
                                                         <SelectTrigger>
-                                                            <SelectValue placeholder="Select a fruit" />
+                                                            <SelectValue placeholder="Select a space" />
                                                         </SelectTrigger>
                                                     </FormControl>
                                                     <SelectContent>
-                                                        <SelectItem value="apple">Apple</SelectItem>
-                                                        <SelectItem value="banana">Banana</SelectItem>
-                                                        <SelectItem value="orange">Orange</SelectItem>
+                                                        <SelectItem value="alumini">Alumini</SelectItem>
+                                                        <SelectItem value="student">Student</SelectItem>
+                                                        <SelectItem value="event">Event</SelectItem>
+                                                        <SelectItem value="lost and found">Lost and Found</SelectItem>
                                                     </SelectContent>
                                                 </Select>
-                                                <FormMessage />
+                                                {form.formState.errors.space ? (
+                                                    <FormMessage />
+                                                ) : (
+                                                    <div className="text-sm">Catalogue is Shared in Space</div>
+                                                )}
                                             </FormItem>
                                         )}
                                     />
-
                                     {/* Submit Button */}
-                                    <Button type="submit">Submit</Button>
+                                    <DialogFooter>
+                                        <Button type="submit" className="mt-3" >
+                                            Save changes
+                                        </Button>
+                                    </DialogFooter>
                                 </form>
                             </Form>
                         </div>
 
                     </div>
 
-                    <DialogFooter>
-                        <Button type="submit">
-                            Save changes
-                        </Button>
-                    </DialogFooter>
+
                 </DialogContent>
             }
         </Dialog>
