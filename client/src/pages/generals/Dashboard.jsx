@@ -1,13 +1,13 @@
 import Bottombar from '@/components/shared/Bottombar'
 import Headline from '@/components/shared/Headline'
 import LeftSideBar from '@/components/shared/LeftSideBar'
-import TopBar from '@/components/shared/TopBar'
+import RightBar from '@/components/shared/RightBar';
 import React, { useState } from 'react'
 import Catalogue from './Catalogue'
 
 function Dashboard() {
-  const [showCatalogue,setShowCatalogue]=useState(false);
-  const showCatalogueHandler=(state)=>{
+  const [showCatalogue, setShowCatalogue] = useState(false);
+  const showCatalogueHandler = (state) => {
     console.log("This Fuction in Dashboard is Called");
     setShowCatalogue(state);
     console.log("This Fuction in Dashboard is Called");
@@ -15,31 +15,35 @@ function Dashboard() {
 
   return (
     // Top Division
-    <div>
-        <div>
-          <Headline />
-        </div>
-    {/* Left Side Bar */}
+    <div className="">
+      <div>
+        <Headline />
+      </div>
+      {/* Left Side Bar */}
 
-      <div className="flex flex-row">
-        <LeftSideBar CatalogueHandler={showCatalogueHandler}/>
-        <div className="flex flex-col">
+      <div className="flex flex-row justify-between">
+        <LeftSideBar CatalogueHandler={showCatalogueHandler} />
+
+        <div className="flex flex-row justify-center w-10/12 bg-[#f1f5f9] text-white">
           <div>
-            {showCatalogue?<Catalogue/>:<></>}
-          <div>
-            Content
-          </div>
-          <div>
-          Content
-          </div>
+            {showCatalogue ? <Catalogue /> : <></>}
+            <div> 
+              heylo
+            </div>
+            <div >
+              heylo
+            </div>
           </div>
         </div>
-        <Bottombar/>
+        <RightBar />
+        <Bottombar />
       </div>
       <div>
-        
+
       </div>
+
     </div>
+
   )
 }
 

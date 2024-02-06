@@ -67,7 +67,7 @@ function Bottombar() {
       </div>
 
       <div>
-        <NavLink to="/team">
+        <NavLink to="/profile">
         <LazyLoadImage  
           src={userData?.profilepicture}
           className={`h-8 md:h-10 rounded-full mt-2.5`}

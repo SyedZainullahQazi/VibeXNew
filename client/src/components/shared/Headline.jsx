@@ -23,7 +23,7 @@ const Headline = () => {
     <Carousel>
       {slides.map((slide, index) => (
         <Carousel.Item key={index}>
-          <div className={`flex h-15 w-full justify-center bg-black text-white py-1 items-center`}>{slide.title}</div>
+          <div className={`flex h-15 z-20 w-full justify-center bg-black text-white py-1 items-center`}>{slide.title}</div>
         </Carousel.Item>
       ))}
     </Carousel>

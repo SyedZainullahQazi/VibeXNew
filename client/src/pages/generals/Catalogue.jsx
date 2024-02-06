@@ -127,7 +127,10 @@ export function Catalogue() {
     return (
         <Dialog>
             <DialogTrigger asChild>
+            <div className="flex flex-row justify-between  lg:w-32">
                 <a><MdAddToPhotos className="text-3xl md:text-4xl text-black mt-3 md:mt-4" /></a>
+                <p className="text-base  mt-3 hidden lg:block">Create</p>
+            </div>
             </DialogTrigger>
             {phase ?
                 // Here we have the First Part Of Catalogue

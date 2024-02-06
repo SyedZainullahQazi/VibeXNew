@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Auth from './components/auth/Auth';
 import GeneralProtectedRoute from './components/protectedRoutes/GeneralProtectedRoute'
 import Dashboard from './pages/generals/Dashboard';
+import Profile from './pages/generals/Profile';
 
 const App=()=> {
   return (
@@ -13,6 +14,7 @@ const App=()=> {
       <Routes>
         <Route path="/" element={<Auth/>} />
         <Route path="/dashboard" element={<GeneralProtectedRoute elementBody={<Dashboard />} />} />
+        <Route path="/profile" element={<GeneralProtectedRoute elementBody={<Profile />} />} />
       </Routes>
     </AuthProvider>
     </BrowserRouter>
