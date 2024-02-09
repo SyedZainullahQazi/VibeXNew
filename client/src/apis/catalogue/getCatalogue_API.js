@@ -1,14 +1,13 @@
 import axios from "axios";
 
-const addCatalogue_API = async (jwtToken,catalogue) => {
+const getCatalogue_API = async (jwtToken,catalogue) => {
   const config = {
     headers: {
       'Authorization': `Bearer ${jwtToken}`, 
     },
   };
   try {
-    const response = await axios.post(`${import.meta.env.VITE_SERVER}/api/catalogue/add`,catalogue ,config)
-    console.log(data);
+    const response = await axios.get(`${import.meta.env.VITE_SERVER}/api/catalogue/get`,config)
     console.log(response.data);
     return response.data;
   }
@@ -17,4 +16,4 @@ const addCatalogue_API = async (jwtToken,catalogue) => {
   };
 }
 
-export default addCatalogue_API;
+export default getCatalogue_API;

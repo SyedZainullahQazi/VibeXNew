@@ -28,7 +28,7 @@ function Bottombar() {
       fetchData();
     }, []);
   return (
-    <div className="flex flex-row justify-between bg-slate-200 text-black h-16 fixed bottom-0 left-0 right-0 lg:hidden">
+    <div className="flex flex-row justify-between bg-slate-200 text-black h-13 fixed bottom-0 left-0 right-0 lg:hidden">
               <div>
         <NavLink to="/dashboard">
           <img src={Logo} className="h-14 mt-1 ml-5 hidden md:block " />

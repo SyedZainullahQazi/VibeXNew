@@ -35,11 +35,11 @@ const slides = [
 
 const RightAdvertSlider = () => {
   return (
-    <div className="rounded-xl ">
+    <div className="rounded-xl">
     <Carousel >
       {slides.map((slide, index) => (
         <Carousel.Item key={index}>
-          <div className={`flex h-[100vh] p-2 w-full justify-center items-center`}>
+          <div className={`flex h-[100vh] p-2 w-full justify-center items-center `}>
             <img src={slide.image} alt="Slider" className="h-full w-full image object-cover" />
           </div>
         </Carousel.Item>

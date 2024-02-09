@@ -46,10 +46,12 @@ import { z } from "zod"
 import addCatalogue_API from '@/apis/catalogue/addCatalogue_API';
 import Cookies from 'js-cookie';
 import base64Converter from '@/lib/base64Converter/base64Converter';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export function Catalogue() {
+    const navigate=useNavigate();
     const [writePostWarning, setWritePostWarning] = useState(false);
     const [phase, setPhase] = useState(true);
     const [api, setApi] = useState(null);
@@ -120,8 +122,7 @@ export function Catalogue() {
             images:base64Images
         }
         await addCatalogue_API(Cookies.get("jwtToken"), catalogue);
-        console.log(selectedImages);
-        console.log(data);
+        navigate("/profile");
     };
 
     return (
@@ -166,7 +167,7 @@ export function Catalogue() {
                                         selectedImages.map((file, index) => (
                                             <CarouselItem key={index}>
                                                 <div className="p-1">
-                                                    <Card>
+                                                    <Card >
                                                         <CardContent className="relative flex aspect-square items-center justify-center p-6">
                                                             <button
                                                                 onClick={() => handleButtonClick(index)}  // Replace handleButtonClick with your actual function

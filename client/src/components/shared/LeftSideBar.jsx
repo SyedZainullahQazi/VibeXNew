@@ -98,7 +98,9 @@ function LeftSideBar(props) {
       </div>
 
       <div>
-        <NavLink to="/profile">
+        <NavLink to="/profile"  className={({ isActive, isPending }) =>
+            isPending ? "" : isActive ? "text-[#64748b] font-bold" : "text-black "
+          }>
         <div className="lg:flex flex-row hidden justify-between lg:w-32">
           <LazyLoadImage
             src={userData?.profilepicture}
