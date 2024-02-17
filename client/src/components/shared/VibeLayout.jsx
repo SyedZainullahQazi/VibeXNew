@@ -27,7 +27,7 @@ function VibeLayout({elementBody:Component}) {
               <div>
                 {showCatalogue ? <Catalogue /> : <></>}
                 <div className='text-black'> 
-                <Component/>
+                {Component()}
                 </div>
               </div>
             </div>

@@ -24,7 +24,11 @@ const addCatalogue = async (req, res) => {
       req.body.images.map(async (image) => {
         try {
           const link = await cloudinaryUpload(image);
-          return link;
+          return {
+            image_url: link,
+            memoryNote: "",
+            privacy: "public"
+          };
         } catch (error) {
           console.error('Error uploading image:', error);
           throw error; // Propagate the error
@@ -38,6 +42,8 @@ const addCatalogue = async (req, res) => {
       space: req.body.space,
       images: uploadLinks,
       uploadedBy: user._id,
+      likes: [],
+      comments: [],
     });
 
     // Save the new Catalogue entry to the database

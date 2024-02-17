@@ -33,6 +33,9 @@ module.exports = {
       },
       fontFamily: {
         'protest-guerrilla': ['Protest Guerrilla', 'sans-serif'],
+        'pacifico': ['Pacifico', 'cursive'],
+        'lobster-two-bold': ['Lobster Two', 'sans-serif'],
+        'homemade-apple': ['Homemade Apple', 'cursive'],
       },
     },
   },

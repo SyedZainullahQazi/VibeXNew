@@ -23,6 +23,7 @@ import Cookies from "js-cookie"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import ViewCatalogue from "./ViewCatalogue"
+import profileCatalogueSlider from "../Slider/ProfileCatalogueSlider"
 
 function CatalogueCover({ Catalogue }) {
     const [hovered, setHovered] = useState(false);
@@ -60,13 +61,13 @@ function CatalogueCover({ Catalogue }) {
                 )}
                 <button className="absolute z-20 right-0 text-2xl"><AiOutlineCloseCircle /></button>
                 <LazyLoadImage
-                    src={Catalogue.images[0]}
+                    src={Catalogue.images[0].image_url}
                     effect="blur"
                     className={`object-cover rounded  w-[33vw] sm:w-[29w] md:w-[30vw] lg:w-[19vw] h-[18vh] sm:h-[20vh] md:h-[20vh] lg:h-[40vh]`}
                 />
             </CardContent>
             {isDialogOpen &&
-                <ViewCatalogue stateVar={isDialogOpen} closeCatalog={closeCatalogueOptions}/>
+                <ViewCatalogue catalogueDetails={Catalogue} stateVar={isDialogOpen} closeCatalog={closeCatalogueOptions}/>
             }
         </Card>
 

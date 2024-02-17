@@ -22,9 +22,9 @@ import {
 } from "@/shadcn-components/ui/tabs"
 
 export function Profile() {
-  return (
-    <VibeLayout elementBody={()=>(
-    <Tabs defaultValue="account" className="w-screen sm:w-[90vw] lg:w-[58vw] mt-4">
+  function myTemp(){
+    return(
+      <Tabs defaultValue="account" className="w-screen sm:w-[90vw] lg:w-[58vw] mt-4">
       <TabsList className="grid w-full grid-cols-3 ">
         <TabsTrigger value="catalogue">Catalogue</TabsTrigger>
         <TabsTrigger value="activity">Activity</TabsTrigger>
@@ -35,7 +35,10 @@ export function Profile() {
       <Account/>
 
     </Tabs>
-    )}/>
+    )
+  }
+  return (
+    <VibeLayout elementBody={myTemp}/>
   )
 }
 

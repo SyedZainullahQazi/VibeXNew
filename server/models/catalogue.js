@@ -1,6 +1,8 @@
-import mongoose from 'mongoose';
-
+import mongoose from "mongoose";
 const catalogueSchema = new mongoose.Schema({
+  title:{
+    type:String,required:true
+  },
   description: {
     type: String,
     required: true,
@@ -9,10 +11,13 @@ const catalogueSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  images: {
-    type: [String], // Assuming 'images' is an array of image URLs
-    required: true,
-  },
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+  images:[{
+    image_url: { type: String, required: true },
+    memoryNote: { type: String, required: false },
+    privacy: { type: String, required: true, default: "public", enum: ["public", "private"],}
+  }],
   uploadedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

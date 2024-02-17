@@ -7,7 +7,6 @@ import React from 'react'
 
 function  Account() {
   return (
-    
     <TabsContent value="account">
     <Card>
       <CardHeader>

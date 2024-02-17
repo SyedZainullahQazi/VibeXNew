@@ -13,12 +13,11 @@ function Dashboard() {
     setShowCatalogue(state);
     console.log("This Fuction in Dashboard is Called");
   }
+  function temp(){
+    return (<div>Hello</div>)
+  }
   return (
-    <VibeLayout elementBody={() => (
-      <div>
-        Hello
-      </div>
-    )}
+    <VibeLayout elementBody={temp}
     />
   )
 }

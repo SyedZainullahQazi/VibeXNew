@@ -222,7 +222,10 @@ export function Catalogue() {
                 //here begins the second part of the catalogue
                 :
                 // The Second Catalogue Part Begins below
-                <DialogContent className="flex flex-col items-center max-w-[300px] sm:max-w-[425px] md:max-w-[500px] lg:max-w-[600px] h-[550px] md:h-[520px] lg:h-[540px]">
+                <DialogContent className="flex flex-col items-center max-w-[300px] h-[550px] overflow-auto
+                 sm:max-w-[425px] 
+                 md:max-w-[500px] md:h-[520px]
+                 lg:max-w-[600px] lg:h-[540px] ">
                     <DialogHeader>
                         <div style={{ position: 'fixed', top: '0', left: '0', padding: '10px' }}>
                             <BiArrowBack className="cursor-pointer mt-2" onClick={handleBackToUpload} />
@@ -240,6 +243,7 @@ export function Catalogue() {
                             className="w-40 md:w-3/6 md:ml-30"
                         >
                             <CarouselContent>
+
                                 {selectedImages && selectedImages.length !== 0 ?
                                     selectedImages.map((file, index) => (
                                         <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
@@ -274,9 +278,24 @@ export function Catalogue() {
                             <CarouselPrevious />
                             <CarouselNext />
                         </Carousel>
-                        <div className="flex flex-col items-center justify-between">
+                        <div className="flex flex-col items-center justify-between ">
                             <Form {...form} >
                                 <form onSubmit={form.handleSubmit(onSubmit)} className="w-60 ">
+                                <FormField
+                                        control={form.control}
+                                        name="description"
+                                        render={({ field }) => (
+                                            <FormItem >
+                                                <FormLabel>Description</FormLabel>
+                                                <Input {...field} placeholder="Enter your description" />
+                                                {form.formState.errors.description ? (
+                                                    <FormMessage />
+                                                ) : (
+                                                    <div className="text-sm">Describe Your Experience</div>
+                                                )}
+                                            </FormItem>
+                                        )}
+                                    />
                                     {/* Description Input Field */}
                                     <FormField
                                         control={form.control}
