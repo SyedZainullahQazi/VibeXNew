@@ -1,14 +1,9 @@
-import { Button } from '@/shadcn-components/ui/button'
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/shadcn-components/ui/card"
-import { Input } from '@/shadcn-components/ui/input'
-import { Label } from '@/shadcn-components/ui/label'
 import { TabsContent } from '@/shadcn-components/ui/tabs'
 import React, { useEffect, useState } from 'react'
 import CatalogueCover from './CatalogueCover'
@@ -40,7 +35,7 @@ function  Catalogue() {
       </CardHeader>
       <div className="grid w-full grid-cols-3">
       {catalogues? catalogues.map((catalogue,index)=>(
-      <CatalogueCover Catalogue={catalogue} Index={index}/>)):<div></div>
+      <CatalogueCover  key={catalogue._id} Catalogue={catalogue} Index={index}/>)):<div></div>
       }
       </div>
     </Card>

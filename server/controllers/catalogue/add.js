@@ -38,6 +38,7 @@ const addCatalogue = async (req, res) => {
 
     // Create a new Catalogue entry
     const newCatalogue = new CATALOGUE_MODEL({
+      title:req.body.title,
       description: req.body.description,
       space: req.body.space,
       images: uploadLinks,

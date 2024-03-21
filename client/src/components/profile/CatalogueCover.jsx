@@ -1,29 +1,11 @@
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
 } from "@/shadcn-components/ui/card"
-import { Input } from "@/shadcn-components/ui/input"
-import { Label } from "@/shadcn-components/ui/label"
-import { Button } from '@/shadcn-components/ui/button'
-
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/shadcn-components/ui/select"
 import React, { useEffect, useState } from 'react'
-import getCatalogue_API from "@/apis/catalogue/getCatalogue_API"
-import Cookies from "js-cookie"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import ViewCatalogue from "./ViewCatalogue"
-import profileCatalogueSlider from "../Slider/ProfileCatalogueSlider"
 
 function CatalogueCover({ Catalogue }) {
     const [hovered, setHovered] = useState(false);
@@ -59,7 +41,6 @@ function CatalogueCover({ Catalogue }) {
                         <h3>{Catalogue.space}</h3>
                     </div>
                 )}
-                <button className="absolute z-20 right-0 text-2xl"><AiOutlineCloseCircle /></button>
                 <LazyLoadImage
                     src={Catalogue.images[0].image_url}
                     effect="blur"

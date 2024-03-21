@@ -23,6 +23,10 @@ const catalogueSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+  date: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 const Catalogue = mongoose.model('Catalogue', catalogueSchema);

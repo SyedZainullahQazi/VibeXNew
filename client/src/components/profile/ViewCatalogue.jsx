@@ -1,51 +1,47 @@
 import { Button } from '@/shadcn-components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/shadcn-components/ui/dialog'
-import React, { useEffect, useRef, useState } from 'react'
-import { BiArrowBack } from 'react-icons/bi'
-import { MdOutlineAddToPhotos } from 'react-icons/md'
-import { DialogClose } from '@radix-ui/react-dialog';
+import { Dialog, DialogContent} from '@/shadcn-components/ui/dialog'
+import React, { useEffect, useState } from 'react'
 import ProfileCatalogueSlider from '../Slider/profileCatalogueSlider'
-
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { MdFavoriteBorder } from 'react-icons/md';
-import { MdFavorite } from 'react-icons/md';
 import { AiFillMessage } from 'react-icons/ai';
-import { RiMore2Fill } from 'react-icons/ri';
 import { GiBrain } from 'react-icons/gi'
 import { useNavigate } from 'react-router-dom'
 
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/shadcn-components/ui/form"
-import { Input } from "@/shadcn-components/ui/input"
 import { toast } from "@/shadcn-components/ui/use-toast"
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
 } from "@/shadcn-components/ui/card"
-import vibeX from "@/assets/ImageSlider/vibex.png"
 import CatalogueOptions from './buttons/CatalogueOptions'
 import CatalogueLike from './buttons/CatalogueLike'
+import getUser_API from '@/apis/generals/getUser_API'
+import Cookies from 'js-cookie'
 
 
-function ViewCatalogue(props) {
+function    ViewCatalogue(props) {
     const [isDialogOpen, setDialogOpen] = useState(true);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
+    const [currUser,setCurrUser]=useState(null);
     const navigate = useNavigate();
-
+    
+    useEffect(() => {
+        async function fetchData() {
+          try {
+            const fetchedUser = await getUser_API(Cookies.get("jwtToken"));
+            setCurrUser(fetchedUser);
+            console.log(props.catalogueDetails)
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        fetchData();
+    }, []);
+    
     useEffect(() => {
 
         const handleResize = () => {
@@ -118,19 +114,21 @@ function ViewCatalogue(props) {
 
                         <div className=''>
 
-                            <Card className="w-[37vw]   mr-4" >
+                            <Card className="w-[38vw]  whitespace-normal break-all mr-4" >
                                 <CardHeader className="flex flex-row ">
                                     <CardTitle className="flex flex-row font-lobster-two-bold text-[#059669] ">
                                         <p className="">Memory</p>
                                         <GiBrain className="ml-2 text-2xl mr-[23.5vw]" />
                                         
-                                        <div><CatalogueOptions/></div>
+                                        {(props?.catalogueDetails?.uploadedBy===currUser?._id)?
+                                        <div><CatalogueOptions CatalogueId={props?.catalogueDetails._id}/></div>
+                                        :<div></div>}
 
                                     </CardTitle >
 
                                 </CardHeader>
-                                <CardContent >
-                                    <p className="font-lobster-two-bold text-center font-extrabold text-4xl text-[#022c22]">Daira Is A Flagship Event that occurs every year without the...</p>
+                                <CardContent className="">
+                                    <p className="font-lobster-two-bold text-center font-extrabold text-4xl text-[#022c22]">{props.catalogueDetails.description}...</p>
                                 </CardContent>
                                 <CardFooter className="flex justify-end items-end">
                                     <p className="font-homemade-apple text-center font-extrabold text-sm text-[#022c22]">28/11/2024</p>

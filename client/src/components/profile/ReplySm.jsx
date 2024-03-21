@@ -4,23 +4,12 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
-    CardTitle,
 } from "@/shadcn-components/ui/card"
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/shadcn-components/ui/accordion"
 
-import { Input } from "@/shadcn-components/ui/input"
-import { Label } from "@/shadcn-components/ui/label"
 import ImgUrl from "../../assets/ImageSlider/slider_3.jpg";
 import { MdDelete, MdEdit, MdFavoriteBorder } from 'react-icons/md'
-import FormPostSingle from './FormPostSingle'
-import ReplyCommentForm from './ReplyCommentForm'
+
 function ReplySm() {
     return (
         <Card className="w-[71vw] flex flex-col p-2 mt-3 ml-2

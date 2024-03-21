@@ -47,17 +47,20 @@ import addCatalogue_API from '@/apis/catalogue/addCatalogue_API';
 import Cookies from 'js-cookie';
 import base64Converter from '@/lib/base64Converter/base64Converter';
 import { useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 
 export function Catalogue() {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [writePostWarning, setWritePostWarning] = useState(false);
     const [phase, setPhase] = useState(true);
     const [api, setApi] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [lastIndex, setLastIndex] = useState(0);
     const [selectedImages, setSelectedImages] = useState([]);
     const formSchema = z.object({
+        title: z.string().min(10, "Atleast 10 Chars").max(30, 'At Most 30 Chars.'),
         description: z.string().min(30, "Atleast 30 Chars").max(150, 'At Most 150 Chars.'),
         space: z.string().refine(value => ['alumini', 'student', 'event', 'lost and found'].includes(value), {
             message: 'Select Space.',
@@ -111,27 +114,45 @@ export function Catalogue() {
         defaultValues: {
             description: '',
             space: '',
+            title: '',
         },
     });
 
     const onSubmit = async (data) => {
         const base64Images = await Promise.all(selectedImages.map(file => base64Converter(file)));
-        const catalogue={
-            description:data.description,
-            space:data.space,
-            images:base64Images
+        const catalogue = {
+            description: data.description,
+            title: data.title,
+            space: data.space,
+            images: base64Images
         }
-        await addCatalogue_API(Cookies.get("jwtToken"), catalogue);
-        navigate("/profile");
+
+        setLoading(true);
+        try {
+            await addCatalogue_API(Cookies.get("jwtToken"), catalogue);
+            setTimeout(() => {
+                setLoading(false);
+            }, 3000);
+
+            setTimeout(() => {
+                navigate("/profile")
+                window.location.reload();
+            }, 4000);
+
+        } catch (error) {
+            console.error('Error deleting catalogue:', error);
+        }
+
+
     };
 
     return (
         <Dialog>
             <DialogTrigger asChild>
-            <div className="flex flex-row justify-between  lg:w-32">
-                <a><MdAddToPhotos className="text-3xl md:text-4xl text-black mt-3 md:mt-4" /></a>
-                <p className="text-base  mt-3 hidden lg:block">Create</p>
-            </div>
+                <div className="flex flex-row justify-between  lg:w-32">
+                    <a><MdAddToPhotos className="text-3xl md:text-4xl text-black mt-3 md:mt-4" /></a>
+                    <p className="text-base  mt-3 hidden lg:block">Create</p>
+                </div>
             </DialogTrigger>
             {phase ?
                 // Here we have the First Part Of Catalogue
@@ -281,17 +302,17 @@ export function Catalogue() {
                         <div className="flex flex-col items-center justify-between ">
                             <Form {...form} >
                                 <form onSubmit={form.handleSubmit(onSubmit)} className="w-60 ">
-                                <FormField
+                                    <FormField
                                         control={form.control}
-                                        name="description"
+                                        name="title"
                                         render={({ field }) => (
                                             <FormItem >
-                                                <FormLabel>Description</FormLabel>
-                                                <Input {...field} placeholder="Enter your description" />
-                                                {form.formState.errors.description ? (
+                                                <FormLabel>Title</FormLabel>
+                                                <Input {...field} placeholder="Enter Post Title" />
+                                                {form.formState.errors.title ? (
                                                     <FormMessage />
                                                 ) : (
-                                                    <div className="text-sm">Describe Your Experience</div>
+                                                    <div className="text-sm mt-4"></div>
                                                 )}
                                             </FormItem>
                                         )}
@@ -307,7 +328,7 @@ export function Catalogue() {
                                                 {form.formState.errors.description ? (
                                                     <FormMessage />
                                                 ) : (
-                                                    <div className="text-sm">Describe Your Experience</div>
+                                                    <div className="text-sm mt-4"></div>
                                                 )}
                                             </FormItem>
                                         )}
@@ -343,9 +364,11 @@ export function Catalogue() {
                                     />
                                     {/* Submit Button */}
                                     <DialogFooter>
-                                        <Button type="submit" className="mt-3" >
-                                            Save changes
-                                        </Button>
+                                         {loading ? (
+                        <CircularProgress />
+                    ) : (
+                        <Button className="mt-3" type="submit" >Submit Post</Button>
+                    )}
                                     </DialogFooter>
                                 </form>
                             </Form>

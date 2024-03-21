@@ -2,23 +2,7 @@ import React from 'react'
 import { useEffect,useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import ProfileCatalogueSliderSm from '../Slider/ProfileCatalogueSliderSm';
-
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Button } from "@/shadcn-components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/shadcn-components/ui/form"
-import { Input } from "@/shadcn-components/ui/input"
-import { toast } from "@/shadcn-components/ui/use-toast"
-import { FaHeart } from 'react-icons/fa'
 
 
 import VibeLayout from '../shared/VibeLayout';
@@ -35,8 +19,10 @@ function ViewCatalogueSm() {
   const location = useLocation();
 
   useEffect(() => {
+    console.log("------------------------$");
     console.log(location.state);
-  }, [location.state]); // Example of using useEffect to manage side effects related to state changes
+    console.log("-------------------------$");
+  }, [location.state]);
 
   function viewCatalogueSm(){
     return(
@@ -49,7 +35,7 @@ function ViewCatalogueSm() {
 
           <div className="flex flex-col h-[41vh] lg:w-[60vw] lg:h-fit">
             <div className="">
-              <FormPostSingle />
+              <FormPostSingle postData={location.state} />
             </div>
             <div>
               <Separator  className="mt-3 mb-2"/>
