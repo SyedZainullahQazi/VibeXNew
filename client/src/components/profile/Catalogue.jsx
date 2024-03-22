@@ -10,18 +10,38 @@ import CatalogueCover from './CatalogueCover'
 import getCatalogue_API from '@/apis/catalogue/getCatalogue_API'
 import Cookies from 'js-cookie'
 import ViewCatalogue from './ViewCatalogue'
+import getUser_API from "@/apis/generals/getUser_API"
 
 function  Catalogue() {
   const [catalogues,setCatalogue]=useState(null);
   const [selectedCatalogue,setSelectedCatalogue]=useState(null);
+  const [userDetails,setUserDetails]=useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const fetchUser = await getUser_API(Cookies.get("jwtToken"));
+        setUserDetails(fetchUser);
+        console.log("------------");
+        console.log(fetchUser);
+        console.log("------------");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+
   useEffect(()=>{
       const getCatalogue =async ()=>{
-          const savedCatalogue=await getCatalogue_API(Cookies.get("jwtToken"));
+          const savedCatalogue=await getCatalogue_API(Cookies.get("jwtToken"),userDetails._id);
           setCatalogue(savedCatalogue);
           console.log(savedCatalogue);
       }
       getCatalogue();
-  },[]);
+  },[userDetails]);
+
   return (
     <div>
     {selectedCatalogue?<ViewCatalogue/>:

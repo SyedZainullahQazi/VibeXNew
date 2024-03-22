@@ -14,7 +14,7 @@ import { likeCatalogue_API } from '@/apis/catalogue/LikeCatalogue_API';
 import getUser_API from '@/apis/generals/getUser_API';
 import getCatalogue_API from '@/apis/catalogue/getCatalogue_API';
 import getOneCatalogue_API from '@/apis/catalogue/getOneCatalogue_API';
-import { CatalogueCommentAdd_API } from '@/apis/catalogue/CatalogueComments_API';
+import { CatalogueCommentAdd_API ,CatalogueCommentGet_API} from '@/apis/catalogue/CatalogueComments_API';
 
 
 const FormSchema = z.object({
@@ -77,13 +77,17 @@ const FormPostSingle = (props) => {
     });
   }
 
-  const submitComment = (event) => {
+  const submitComment = async (event) => {
     event.preventDefault();
     console.log("^^^^^^^^^^^^^^^^^^^^^^^");
     console.log(userData._id);
     console.log("^^^^^^^^^^^^^^^^^^^^^^^");
 
-    CatalogueCommentAdd_API(Cookies.get("jwtToken"), props.postData._id, commentText, userData._id)
+    await CatalogueCommentAdd_API(Cookies.get("jwtToken"), props.postData._id, commentText, userData._id)
+    const truthVal=!props.switchVal;
+    props.stateHandler(truthVal);
+    setCommentText("")
+    
   }
   const handleCommentChange = (event) => {
     setCommentText(event.target.value);

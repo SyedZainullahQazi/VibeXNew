@@ -50,7 +50,6 @@ const addCatalogue = async (req, res) => {
     // Save the new Catalogue entry to the database
     const savedCatalogue = await newCatalogue.save();
 
-    console.log(savedCatalogue);
     res.status(201).json(savedCatalogue);
   } catch (error) {
     console.error('Error:', error);

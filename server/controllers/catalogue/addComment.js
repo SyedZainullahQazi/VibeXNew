@@ -1,31 +1,32 @@
 import CATALOGUE_MODEL from "../../models/catalogue.js";
+import COMMENT_MODEL from "../../models/comment.js"; // Import the Comment model
 
 const AddComment = async (req, res) => {
   try {
-    const catalogueId=req?.body?.catalogueId;
-    const comment=req?.body?.comment;
-    const userId=req?.body?.userId;
+    const { catalogueId, comment, userId } = req.body;
 
-    console.log("alialialialialialialiali");
-    console.log(comment,catalogueId,userId);
-    console.log("alialialialialialialiali");
-
-
-    const catalogue = await CATALOGUE_MODEL.findOne({ _id: catalogueId });
+    // Check if the catalogue exists
+    const catalogue = await CATALOGUE_MODEL.findById(catalogueId);
     if (!catalogue) {
       return res.status(404).json({ error: 'Catalogue not found' });
     }
-    const NewComment={
-    commentText: comment,
-    replies: [],
-    likes: [],
-    commentBy:userId,
-    }
 
-    catalogue.comments.push(NewComment);
+    // Create a new comment using the Comment model
+    const newComment = new COMMENT_MODEL({
+      commentText: comment,
+      commentBy: userId // Assuming userId is a valid ObjectId
+    });
+
+    // Save the new comment
+    const savedComment = await newComment.save();
+
+    // Push the saved comment's ObjectId to the comments array in the catalogue document
+    catalogue.comments.push(savedComment._id);
+
+    // Save the updated catalogue document
     await catalogue.save();
 
-    return res.status(200).json({message: "Retrived"});
+    return res.status(200).json({ message: "Comment added successfully" });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Server error' });

@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const getCatalogue_API = async (jwtToken,catalogue) => {
+const getCatalogue_API = async (jwtToken,userid) => {
   const config = {
     headers: {
       'Authorization': `Bearer ${jwtToken}`, 
     },
   };
   try {
-    const response = await axios.get(`${import.meta.env.VITE_SERVER}/api/catalogue/get`,config)
+    const response = await axios.get(`${import.meta.env.VITE_SERVER}/api/catalogue/get/${userid}`,config)
     console.log(response.data);
     return response.data;
   }
