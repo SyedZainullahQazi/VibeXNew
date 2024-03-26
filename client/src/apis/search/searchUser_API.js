@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const getUser_API = async (jwtToken) => {
+const searchUser_API = async (jwtToken,usernameText) => {
   const config = {
     headers: {
       'Authorization': `Bearer ${jwtToken}`,
     },
   };
   try {
-    const response = await axios.get(`${import.meta.env.VITE_SERVER}/api/generals/getUser`, config)
+    const response = await axios.get(`${import.meta.env.VITE_SERVER}/api/generals/searchUser/${usernameText}`, config)
     return response.data;
   }
   catch (error) {
@@ -15,4 +15,4 @@ const getUser_API = async (jwtToken) => {
   };
 }
 
-export default getUser_API;
+export default searchUser_API;

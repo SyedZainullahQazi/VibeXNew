@@ -4,8 +4,6 @@ import COMMENT_MODEL from "../../models/comment.js";
 const GetCommentsByCatalogueId = async (req, res) => {
   try {
     const { catalogueId } = req.params;
-    console.log("snadjnjnadsa");
-    console.log(catalogueId);
     // Check if the catalogue exists
     const catalogue = await CATALOGUE_MODEL.findById(catalogueId).populate('comments');
 

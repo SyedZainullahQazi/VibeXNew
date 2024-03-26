@@ -29,7 +29,6 @@ app.use("/api/catalogue",CATALOGUE_ROUTE);
 
 app.get("/", (req, res) => {
     const countryNames = ["United States", "Canada", "United Kingdom"];
-    console.log("Hello")
     res.json({ countries: countryNames });
 });
 

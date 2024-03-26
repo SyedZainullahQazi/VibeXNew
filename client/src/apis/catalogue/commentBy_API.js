@@ -6,10 +6,8 @@ const getCommentBy_API = async (jwtToken, commentId) => {
       'Authorization': `Bearer ${jwtToken}`, 
     },
   };
-  console.log(commentId +"askbdaksndsakbdasbsab");
   try {
     const response = await axios.get(`${import.meta.env.VITE_SERVER}/api/catalogue/getCommentBy/${commentId}`, config);
-    console.log(response.data);
     return response.data;
   }
   catch (error) {

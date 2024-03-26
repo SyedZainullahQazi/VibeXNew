@@ -8,7 +8,7 @@ const getCatalogue_API = async (jwtToken,userid) => {
   };
   try {
     const response = await axios.get(`${import.meta.env.VITE_SERVER}/api/catalogue/get/${userid}`,config)
-    console.log(response.data);
+
     return response.data;
   }
   catch (error) {

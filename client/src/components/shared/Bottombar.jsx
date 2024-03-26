@@ -20,7 +20,6 @@ function Bottombar() {
         try {
           const fetchedUser = await getUser_API(Cookies.get("jwtToken"));
           setUserData(fetchedUser);
-          console.log(userData);
         } catch (error) {
           console.error(error);
         }

@@ -24,7 +24,7 @@ function CatalogueOptions(props) {
             <FaEdit className="text-lg mr-3"/>
             Edit
         </Button>
-        <CatalogueManageOptions CatalogueId={props.CatalogueId}/>
+        <CatalogueManageOptions CatalogueId={props.CatalogueId} userId={props?.userId}/>
       </DialogDescription>
     </DialogHeader>
   </DialogContent>

@@ -9,6 +9,7 @@ import Profile from './pages/generals/Profile';
 import ViewCatalogue from './components/profile/ViewCatalogue';
 import { Toaster } from './shadcn-components/ui/toaster';
 import ViewCatalogueSm from './components/profile/ViewCatalogueSm';
+import Search  from './pages/generals/Search';
 
 const App=()=> {
   return (
@@ -17,9 +18,11 @@ const App=()=> {
       <Routes>
         <Route path="/" element={<Auth/>} />
         <Route path="/dashboard" element={<GeneralProtectedRoute elementBody={<Dashboard />} />} />
-        <Route path="/profile" element={<GeneralProtectedRoute elementBody={<Profile />} />} />
-        <Route path="//view-catalogue-sm" element={<GeneralProtectedRoute elementBody={<ViewCatalogueSm />} />} />
+        <Route path="/profile/:userId" element={<GeneralProtectedRoute elementBody={<Profile />} />} />
+        <Route path="/view-catalogue-sm" element={<GeneralProtectedRoute elementBody={<ViewCatalogueSm />} />} />
+        <Route path="/search" element={<GeneralProtectedRoute elementBody={<Search/>}/>}/>
         <Route path="/test" element={<ViewCatalogue/>}/>
+        <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
       <Toaster/>
     </AuthProvider>

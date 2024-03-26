@@ -5,7 +5,6 @@ const getUser = async (req, res) => {
   try {
     const token = req.headers['authorization'].split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded.email);
 
     const user = await USER_MODEL.findOne({ email_id: decoded.email });
 

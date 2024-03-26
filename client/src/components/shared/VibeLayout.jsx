@@ -8,9 +8,7 @@ import Bottombar from './Bottombar';
 function VibeLayout({elementBody:Component}) {
     const [showCatalogue, setShowCatalogue] = useState(false);
     const showCatalogueHandler = (state) => {
-      console.log("This Fuction in Dashboard is Called");
       setShowCatalogue(state);
-      console.log("This Fuction in Dashboard is Called");
     }
     return (
         // Top Division

@@ -34,7 +34,6 @@ function    ViewCatalogue(props) {
           try {
             const fetchedUser = await getUser_API(Cookies.get("jwtToken"));
             setCurrUser(fetchedUser);
-            console.log(props.catalogueDetails)
           } catch (error) {
             console.error(error);
           }
@@ -84,9 +83,7 @@ function    ViewCatalogue(props) {
     }
 
     useEffect(() => {
-        console.log(isDialogOpen)
         if (isDialogOpen == false) {
-            console.log(props.catalogueDetails);
             props.closeCatalog(false);
         }
     }, [isDialogOpen]);
@@ -120,8 +117,8 @@ function    ViewCatalogue(props) {
                                         <p className="">Memory</p>
                                         <GiBrain className="ml-2 text-2xl mr-[23.5vw]" />
                                         
-                                        {(props?.catalogueDetails?.uploadedBy===currUser?._id)?
-                                        <div><CatalogueOptions CatalogueId={props?.catalogueDetails._id}/></div>
+                                        {(props?.catalogueDetails?.uploadedBy?._id===currUser?._id)?
+                                        <div><CatalogueOptions CatalogueId={props?.catalogueDetails._id} userId={currUser?._id}/></div>
                                         :<div></div>}
 
                                     </CardTitle >
@@ -131,7 +128,7 @@ function    ViewCatalogue(props) {
                                     <p className="font-lobster-two-bold text-center font-extrabold text-4xl text-[#022c22]">{props.catalogueDetails.description}...</p>
                                 </CardContent>
                                 <CardFooter className="flex justify-end items-end">
-                                    <p className="font-homemade-apple text-center font-extrabold text-sm text-[#022c22]">28/11/2024</p>
+                                    <p className="font-homemade-apple text-center font-extrabold text-lg text-[#022c22]">{new Date(props?.catalogueDetails?.date).toISOString().split('T')[0]}</p>
                                 </CardFooter>
 
                             </Card>
@@ -146,7 +143,7 @@ function    ViewCatalogue(props) {
 
                             </div>
                             <div className="flex flex-col items-center mt-2 mr-3">
-                                <p className="text-blue-600 text-sm">32 Comments, 14 Likes on This Catalogue</p>
+                                <p className="text-blue-600 text-sm">{`${props?.catalogueDetails?.comments?.length} Comments, ${props?.catalogueDetails?.likes?.length} Likes on This Catalogue`}</p>
                                 <Button className="mt-3 w-[20vw]" onClick={handleNavigate}>View Post</Button>
                             </div>
 

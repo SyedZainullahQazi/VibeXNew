@@ -79,10 +79,6 @@ const FormPostSingle = (props) => {
 
   const submitComment = async (event) => {
     event.preventDefault();
-    console.log("^^^^^^^^^^^^^^^^^^^^^^^");
-    console.log(userData._id);
-    console.log("^^^^^^^^^^^^^^^^^^^^^^^");
-
     await CatalogueCommentAdd_API(Cookies.get("jwtToken"), props.postData._id, commentText, userData._id)
     const truthVal=!props.switchVal;
     props.stateHandler(truthVal);
@@ -122,7 +118,7 @@ const FormPostSingle = (props) => {
               <FormLabel>Comment</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Tell us a little bit about yourself"
+                  placeholder="Write Your Comment About Post"
                   className="resize-none w-[80vw] 
                   md:text-xl
                   lg:w-[60vw] lg:text-base"
@@ -137,7 +133,7 @@ const FormPostSingle = (props) => {
         />
         <Button type="submit" className="mt-3 w-[80vw] 
       md:h-[5vh] md:text-lg
-      lg:w-[60vw] lg:h-[7vh]" onClick={submitComment} >Submits</Button>
+      lg:w-[60vw] lg:h-[7vh]" onClick={submitComment} >Submit</Button>
 
       </form>
     </Form>

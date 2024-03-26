@@ -28,7 +28,7 @@ const CatalogueManageOptions = (props) => {
             setTimeout(() => {
                 setLoading(false);
             }, 2000);
-            navigate("/profile")
+            navigate(`/profile/${props?.userId}`)
             setTimeout(()=>{
                 window.location.reload();
             },2000)

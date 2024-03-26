@@ -1,10 +1,10 @@
 import CATALOGUE_MODEL from "../../models/catalogue.js";
 
-const getCatalogue = async (req, res) => {
-  const {userid}=req.params;
+const getAllCatalogue = async (req, res) => {
   try {
     // Query the database to fetch all catalogue entries
-    const catalogues = await CATALOGUE_MODEL.find({uploadedBy:userid}).populate("uploadedBy");
+    let catalogues = await CATALOGUE_MODEL.find({}).populate('uploadedBy');
+    catalogues = catalogues.reverse();
 
     // Send the fetched catalogue entries as a response
     res.status(200).json(catalogues);
@@ -14,4 +14,4 @@ const getCatalogue = async (req, res) => {
   }
 };
 
-export default getCatalogue;
+export default getAllCatalogue;

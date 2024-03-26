@@ -24,7 +24,6 @@ function LeftSideBar(props) {
       try {
         const fetchedUser = await getUser_API(Cookies.get("jwtToken"));
         setUserData(fetchedUser);
-        console.log(userData);
       } catch (error) {
         console.error(error);
       }
@@ -33,9 +32,7 @@ function LeftSideBar(props) {
   }, []);
 
   const showCataloguePage = () => {
-    console.log("This Function  In LeftSideBar IS Called");
     props.CatalogueHandler(true);
-    console.log("This Function  In LeftSideBar IS Called");
     setCatalogueState(!catalogueState);
   }
 
@@ -61,7 +58,7 @@ function LeftSideBar(props) {
         </NavLink>
       </div>
       <div>
-        <NavLink to="/team">
+        <NavLink to="/search">
           <div className="lg:flex flex-row justify-between hidden lg:w-32">
             <MdOutlineSearch className="text-4xl text-black mt-3" />
             <p className="text-base mt-3">Search</p>
@@ -98,7 +95,7 @@ function LeftSideBar(props) {
       </div>
 
       <div>
-        <NavLink to="/profile"  className={({ isActive, isPending }) =>
+        <NavLink to={`/profile/${userData?._id}`}  className={({ isActive, isPending }) =>
             isPending ? "" : isActive ? "text-[#64748b] font-bold" : "text-black "
           }>
         <div className="lg:flex flex-row hidden justify-between lg:w-32">

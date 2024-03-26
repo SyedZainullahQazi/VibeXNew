@@ -6,12 +6,8 @@ const getOneCatalogue_API = async (jwtToken, catalogueId) => {
       'Authorization': `Bearer ${jwtToken}`, 
     },
   };
-  console.log("==========================!");
-  console.log(catalogueId)
-  console.log("===========================!");
   try {
     const response = await axios.get(`${import.meta.env.VITE_SERVER}/api/catalogue/getClickedCat/${catalogueId}`, config);
-    console.log(response.data);
     return response.data;
   }
   catch (error) {

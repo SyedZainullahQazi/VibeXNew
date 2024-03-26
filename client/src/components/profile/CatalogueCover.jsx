@@ -10,9 +10,6 @@ import ViewCatalogue from "./ViewCatalogue"
 function CatalogueCover({ Catalogue }) {
     const [hovered, setHovered] = useState(false);
     const [isDialogOpen, setDialogOpen] = useState(false);
-    useEffect(() => {
-        console.log(isDialogOpen);
-    }, [isDialogOpen])
     const handleMouseEnter = () => {
         setHovered(true);
       };

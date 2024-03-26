@@ -4,9 +4,6 @@ import COMMENT_MODEL from "../../models/comment.js";
 const GetCommentUsername = async (req, res) => {
   try {
     const { commentId } = req.params;
-    console.log("Ksansdasakdasa")
-    console.log(commentId);
-
 
     // Check if the comment exists
     const comment = await COMMENT_MODEL.findById(commentId);
@@ -20,8 +17,6 @@ const GetCommentUsername = async (req, res) => {
 
     // Extract the populated commentBy details
     const userDetails = comment.commentBy;
-
-    console.log(userDetails);
 
     // Send userDetails as response
     return res.status(200).json(userDetails);

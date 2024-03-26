@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
 
 const ProfileCatalogueSlider = ({images}) => {
-  useEffect(()=>{
-    console.log(images);
-  },[])
+  
   return (
     <div className="rounded-xl">
     {
