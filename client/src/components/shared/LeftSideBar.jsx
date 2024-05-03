@@ -75,7 +75,7 @@ function LeftSideBar(props) {
         </NavLink>
       </div>
       <div>
-        <NavLink to="/team">
+        <NavLink to="/spaces">
           <div className="lg:flex flex-row justify-between hidden lg:w-32">
             <MdWorkspaces className="text-3xl text-black mt-3 lg:ml-1" />
             <p className="text-base  mt-3">Spaces</p>
