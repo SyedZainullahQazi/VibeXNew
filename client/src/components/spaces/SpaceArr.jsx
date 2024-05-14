@@ -8,60 +8,57 @@ import SocietyUrl from "../../assets/SpacesImages/society.jpg"
 import StudentUrl from "../../assets/SpacesImages/Student.jpeg"
 import StudentAffairsUrl from "../../assets/SpacesImages/StudentAffairs.jpg"
 import VisitorUrl from "../../assets/SpacesImages/Visitor.jpeg"
+import EventUrl from "../../assets/SpacesImages/event.jpg";
 
 const spaceArr = [
     {
         imageUrl: `${AlumniUrl}`,
-        spaceName: "Alumni Space",
-        totalPosts: 20
+        spaceSlug: "alumini",
+
     },
     {
         imageUrl: `${CareerUrl}`,
-        spaceName: "Career Services Space",
-        totalPosts: 5
+        spaceSlug: "careerservice",
     },
     {
         imageUrl: `${CompanyUrl}`,
-        spaceName: "Company Space",
-        totalPosts: 8
+        spaceSlug: "company",
     },
     {
         imageUrl: `${FypPartnerUrl}`,
-        spaceName: "Fyp partner Space",
-        totalPosts: 3
+        spaceSlug: "fyppartner",
     },
     {
         imageUrl: `${LostandFoundUrl}`,
-        spaceName: "Lost&Found Space",
-        totalPosts: 11
-    },
-    {
-        imageUrl: `${SocietyUrl}`,
-        spaceName: "Society Space",
-        totalPosts: 18
-    },
-    {
-        imageUrl: `${StudentUrl}`,
-        spaceName: "Student Space",
-        totalPosts: 1
-    },
-    {
-        imageUrl: `${StudentAffairsUrl}`,
-        spaceName: "Student Affairs Space",
-        totalPosts: 7
-    },
-    {
-        imageUrl: `${VisitorUrl}`,
-        spaceName: "Visitor Space",
-        totalPosts: 11
+        spaceSlug: "lost-and-found",
     },
     {
         imageUrl: `${PeerTutoringUrl}`,
-        spaceName: "Peer Tutoring Space",
-        totalPosts: 11
+        spaceSlug: "peertutoring",
     },
+    {
+        imageUrl: `${SocietyUrl}`,
+        spaceSlug: "society",
+    },
+    {
+        imageUrl: `${StudentUrl}`,
+        spaceSlug: "student",
+    },
+    {
+        imageUrl: `${StudentAffairsUrl}`,
+        spaceSlug: "studentaffairs",
+    },
+    {
+        imageUrl: `${VisitorUrl}`,
+        spaceSlug: "visitor",
+    },
+    {
+        imageUrl: `${EventUrl}`,
+        spaceSlug: "event",
+    }
+   
+ 
 
-    
 ];
 
 export default spaceArr;

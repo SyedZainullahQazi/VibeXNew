@@ -14,6 +14,8 @@ import deleteReply from "../../controllers/catalogue/deleteReply.js";
 import deleteComment from "../../controllers/catalogue/deleteComment.js";
 import getAllCatalogue from "../../controllers/catalogue/getAllCatalogue.js";
 
+
+
 const router=express.Router();
 
 router.post('/add',addCatalogue);
@@ -29,6 +31,7 @@ router.get('/getReply/:commentId',GetRepliesByCommentId)
 router.post('/deleteReply',deleteReply);
 router.post('/deleteComment',deleteComment)
 router.get('/getAll',getAllCatalogue);
+
 
 
 export default router;

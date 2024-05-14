@@ -60,12 +60,12 @@ export function Catalogue() {
     const [loading, setLoading] = useState(false);
     const [lastIndex, setLastIndex] = useState(0);
     const [selectedImages, setSelectedImages] = useState([]);
-    const [userData,setUser]=useState(null);
+    const [userData, setUser] = useState(null);
 
     const formSchema = z.object({
         title: z.string().min(10, "Atleast 10 Chars").max(30, 'At Most 30 Chars.'),
         description: z.string().min(30, "Atleast 30 Chars").max(150, 'At Most 150 Chars.'),
-        space: z.string().refine(value => ['alumini', 'student', 'event', 'lost and found','personal'].includes(value), {
+        space: z.string().refine(value => ['alumini', 'student', 'event', 'lost and found', 'society', 'peertutoring', 'visitor', 'studentaffairs', 'fyppartner', 'company', 'careerservice'].includes(value), {
             message: 'Select Space.',
         }),
     });
@@ -74,16 +74,16 @@ export function Catalogue() {
     }
     useEffect(() => {
         async function fetchData() {
-          try {
-            const fetchedUser = await getUser_API(Cookies.get("jwtToken"));
-            setUser(fetchedUser);
-          } catch (error) {
-            console.error(error);
-          }
+            try {
+                const fetchedUser = await getUser_API(Cookies.get("jwtToken"));
+                setUser(fetchedUser);
+            } catch (error) {
+                console.error(error);
+            }
         }
         fetchData();
-      }, []);
-    
+    }, []);
+
     useEffect(() => {
         if (api) {
             api.reInit();
@@ -361,11 +361,20 @@ export function Catalogue() {
                                                         </SelectTrigger>
                                                     </FormControl>
                                                     <SelectContent>
+
                                                         <SelectItem value="alumini">Alumini</SelectItem>
                                                         <SelectItem value="student">Student</SelectItem>
                                                         <SelectItem value="event">Event</SelectItem>
-                                                        <SelectItem value="lost and found">Lost and Found</SelectItem>
-                                                        <SelectItem value="personal">Personal</SelectItem>
+                                                        <SelectItem value="lost-and-found">Lost and Found</SelectItem>
+                                                        <SelectItem value="society">Society</SelectItem>
+                                                        <SelectItem value="careerservice">Career Service</SelectItem>
+                                                        <SelectItem value="company">Company</SelectItem>
+                                                        <SelectItem value="fyppartner">FYP partner</SelectItem>
+                                                        <SelectItem value="studentaffairs">Student Affairs</SelectItem>
+                                                        <SelectItem value="visitor">Visitor</SelectItem>
+                                                        <SelectItem value="peertutoring">PeerTutoring</SelectItem>
+
+
                                                     </SelectContent>
                                                 </Select>
                                                 {form.formState.errors.space ? (
@@ -378,11 +387,11 @@ export function Catalogue() {
                                     />
                                     {/* Submit Button */}
                                     <DialogFooter>
-                                         {loading ? (
-                        <CircularProgress />
-                    ) : (
-                        <Button className="mt-3" type="submit" >Submit Post</Button>
-                    )}
+                                        {loading ? (
+                                            <CircularProgress />
+                                        ) : (
+                                            <Button className="mt-3" type="submit" >Submit Post</Button>
+                                        )}
                                     </DialogFooter>
                                 </form>
                             </Form>

@@ -1,5 +1,5 @@
 import React from 'react'
-    import {
+import {
     Card,
     CardContent,
     CardDescription,
@@ -12,6 +12,12 @@ import {
     AccordionTrigger,
 } from "@/shadcn-components/ui/accordion"
 
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+} from "@/shadcn-components/ui/avatar"
+
 import { MdFavoriteBorder } from 'react-icons/md'
 import ReplyCommentForm from './ReplyCommentForm'
 import { MdDelete, MdEdit } from 'react-icons/md';
@@ -23,8 +29,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { CatalogueDeleteComment_API } from '@/apis/catalogue/CatalogueComments_API'
 import getUser_API from '@/apis/generals/getUser_API'
 function CommentsSm(props) {
-    const [userData, setUserData] = useState(null);    
-    const [myUser,setMyUser]=useState([]);
+    const [userData, setUserData] = useState(null);
+    const [myUser, setMyUser] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
@@ -41,9 +47,9 @@ function CommentsSm(props) {
         }
         fetchData();
     }, [])
-    const deleteComment=async ()=>{
-        const result=await CatalogueDeleteComment_API(Cookies.get("jwtToken"), props.userComment._id);
-        const currComSiwtch=!props.switchVal;
+    const deleteComment = async () => {
+        const result = await CatalogueDeleteComment_API(Cookies.get("jwtToken"), props.userComment._id);
+        const currComSiwtch = !props.switchVal;
         props.stateHandler(currComSiwtch);
     }
     return (
@@ -55,12 +61,9 @@ function CommentsSm(props) {
                     <CardHeader className="p-0 ">
                         <CardDescription className="flex flex-col justify-between p-0 m-0 w-[14vw]
                         lg:w-[6vw]">
-                            
-                            <LazyLoadImage
-                                src={userData?.profilepicture}
-                                effect="blur"
-                                className={`w-[11vw] h-[11vw] rounded-full lg:w-[4vw] lg:h-[4vw]`}
-                            />
+                            <Avatar className="w-[3.9vw] h-[4vw] ml-[1vw] mr-[1vw]">
+                                <AvatarImage src={userData?.profilepicture} className={`rounded-full`} />
+                            </Avatar>
 
                         </CardDescription>
                     </CardHeader>
@@ -79,15 +82,15 @@ function CommentsSm(props) {
                 </div>
                 <div className="sm:flex sm:flex-col sm:space-y-2 
                 lg:flex-row lg:space-y-0">
-                    {(myUser&&userData&&(myUser?._id==userData?._id))?<>
-                    <div className="flex items-center mr-2">
-                        <MdDelete className='flex text-2xl md:text-5xl lg:text-2xl text-red-500 cursor-pointer' 
-                        onClick={deleteComment}/>
-                    </div>
-                    <div className="flex items-center mr-2">
-                        <MdEdit className='flex text-2xl md:text-5xl lg:text-2xl cursor-pointer' />
-                    </div>
-                    </>:<div></div>
+                    {(myUser && userData && (myUser?._id == userData?._id)) ? <>
+                        <div className="flex items-center mr-2">
+                            <MdDelete className='flex text-2xl md:text-5xl lg:text-2xl text-red-500 cursor-pointer'
+                                onClick={deleteComment} />
+                        </div>
+                        <div className="flex items-center mr-2">
+                            <MdEdit className='flex text-2xl md:text-5xl lg:text-2xl cursor-pointer' />
+                        </div>
+                    </> : <div></div>
                     }
                     <div className="flex items-center mr-7">
                         <MdFavoriteBorder className='flex text-2xl md:text-5xl lg:text-2xl cursor-pointer' />
@@ -103,7 +106,7 @@ function CommentsSm(props) {
                         <div className="px-0 py-0">
                             <AccordionContent className="w-full ">
                                 <div className="">
-                                    <ReplyCommentForm commentDetails={props?.userComment} userId={userData?._id}/>
+                                    <ReplyCommentForm commentDetails={props?.userComment} userId={userData?._id} />
                                 </div>
                             </AccordionContent>
                         </div>

@@ -5,8 +5,15 @@ import {
 import { Button } from '@/shadcn-components/ui/button'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import {useNavigate} from 'react-router-dom';
 
-function AllSpaces({ imageUrl, spaceName, totalPosts }) {
+function AllSpaces({ imageUrl, spaceName, totalPosts, spaceSlug  }) {
+
+    const navigate=useNavigate();
+    const handleViewClick = async () => {
+        navigate(`/space-dashboard/${spaceSlug}`);
+    };
+
     return (
         <Card className=' mt-[2vh] ml-[2vh] rounded-3xl w-[45vh] h-[12vh]'>
         <div className='flex items-center'>
@@ -19,7 +26,7 @@ function AllSpaces({ imageUrl, spaceName, totalPosts }) {
                 <p className="text font-bold">{spaceName}</p>
                 <p className="text-xs">{totalPosts} posts</p>
             </div>
-            <Button className="rounded-3xl mt-[4vh] font-bold text-sm ml-auto mr-[2vh] border border-black bg-white text-black">View</Button>
+            <Button onClick={handleViewClick}  className="rounded-3xl mt-[3vh] font-bold text-sm ml-auto mr-[2vh] border border-black bg-white text-black">View</Button>
         </div>
     </Card>
     
