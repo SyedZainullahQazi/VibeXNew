@@ -8,7 +8,7 @@ import CONNECT_DATABASE from "./ConnectDatabase.js";
 import AUTH_ROUTE from "./routes/auth/auth.js";
 import GENERALS_ROUTE from "./routes/generals/generals.js"
 import CATALOGUE_ROUTE from "./routes/catalogue/catalogue.js";
-
+import SPACES_ROUTE from "./routes/spaces/spaces.js";
 
 // const SIGNUP_ROUTE=require("./routes/Auth/signup");
 
@@ -25,6 +25,7 @@ app.use(cors());
 app.use('/api/auth',AUTH_ROUTE);
 app.use('/api/generals',GENERALS_ROUTE);
 app.use("/api/catalogue",CATALOGUE_ROUTE);
+app.use("/api/spaces",SPACES_ROUTE);
 
 
 app.get("/", (req, res) => {

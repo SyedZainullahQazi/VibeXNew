@@ -75,7 +75,7 @@ function LeftSideBar(props) {
         </NavLink>
       </div>
       <div>
-        <NavLink to="/team">
+        <NavLink to="/spaces">
           <div className="lg:flex flex-row justify-between hidden lg:w-32">
             <MdWorkspaces className="text-3xl text-black mt-3 lg:ml-1" />
             <p className="text-base  mt-3">Spaces</p>
@@ -85,14 +85,7 @@ function LeftSideBar(props) {
       <div>
         <Catalogue />
       </div>
-      <div>
-        <NavLink to="/team">
-          <div className="lg:flex flex-row justify-between hidden lg:w-32">
-            <MdNotifications className="text-4xl text-black mt-3" />
-            <p className="text-base  mt-3">Pings</p>
-          </div>
-        </NavLink>
-      </div>
+ 
 
       <div>
         <NavLink to={`/profile/${userData?._id}`}  className={({ isActive, isPending }) =>
