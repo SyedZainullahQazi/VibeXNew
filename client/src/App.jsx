@@ -1,46 +1,32 @@
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { GoogleLogin } from '@react-oauth/google';
-import {jwtDecode} from 'jwt-decode';
+import { AuthProvider } from './contexts/authContext/AuthContext'
+import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Auth from './components/auth/Auth';
+import GeneralProtectedRoute from './components/protectedRoutes/GeneralProtectedRoute'
+import Dashboard from './pages/generals/Dashboard';
+import Profile from './pages/generals/Profile';
+import ViewCatalogue from './components/profile/ViewCatalogue';
+import { Toaster } from './shadcn-components/ui/toaster';
+import ViewCatalogueSm from './components/profile/ViewCatalogueSm';
+import Search  from './pages/generals/Search';
 
-function App() {
-  const [dataD, setData] = useState(null);
-  useEffect(() => {
-    fetch(import.meta.env.VITE_SERVER)
-      .then(response => {
-        // Check if the request was successful (status code 200)
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-        // Parse the JSON response
-        return response.json();
-      })
-      .then(data => {
-        // Handle the data from the API
-        setData(data);
-        console.log(data);
-        console.log(import.meta.env.VITE_SERVER)
-      })
-      .catch(error => {
-        // Handle errors during the fetch
-        console.error('Error during fetch operation:', error);
-      });
-  }, [])
-
+const App=()=> {
   return (
-    <>
-      <GoogleLogin
-        onSuccess={credentialResponse => {
-          const decoded=jwtDecode(credentialResponse?.credential);
-          console.log(decoded);
-        }}
-        onError={() => {
-          console.log('Login Failed');
-        }}
-      />;
-    </>
+    <BrowserRouter>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Auth/>} />
+        <Route path="/dashboard" element={<GeneralProtectedRoute elementBody={<Dashboard />} />} />
+        <Route path="/profile/:userId" element={<GeneralProtectedRoute elementBody={<Profile />} />} />
+        <Route path="/view-catalogue-sm" element={<GeneralProtectedRoute elementBody={<ViewCatalogueSm />} />} />
+        <Route path="/search" element={<GeneralProtectedRoute elementBody={<Search/>}/>}/>
+        <Route path="/test" element={<ViewCatalogue/>}/>
+        <Route path="*" element={<h1>Not Found</h1>} />
+      </Routes>
+      <Toaster/>
+    </AuthProvider>
+    </BrowserRouter>
   )
 }
 
