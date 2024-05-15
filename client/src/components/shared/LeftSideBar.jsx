@@ -67,7 +67,7 @@ function LeftSideBar(props) {
 
       </div>
       <div>
-        <NavLink to="/team">
+        <NavLink to="http://localhost:3000/chats">
           <div className="lg:flex flex-row justify-between hidden lg:w-32">
             <MdChatBubbleOutline className="text-3xl text-black mt-3 lg:ml-1" />
             <p className="text-base  mt-3">Chats</p>

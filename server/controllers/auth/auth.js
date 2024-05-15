@@ -4,6 +4,7 @@ import USER_MODEL from "../../models/user.js";
 
 const AuthController = async (req, res) => {
     try{
+        console.log("Helloo from Qazi")
         const GoogleToken=req.body.token;
         const GoogleClient=new OAuth2Client();
 
